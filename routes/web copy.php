@@ -1,52 +1,67 @@
 <?php
 
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Auth;
+use App\Http\Controllers\ClickController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CustController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ToolController;
+use Illuminate\Support\Facades\Route;
+
 use App\Models\Banner;
 use Illuminate\Support\Facades\Storage;
 
-Route::post('/upload', 'ToolController@upload')->name('upload');
+Route::post('/upload', [ToolController::class, 'upload'])->name('upload');
 
-Route::get('/', 'MainController@index');
+Route::get('/', [MainController::class, 'index']);
 
-Route::get('/test2/{post}', 'PostController@list_test');
-Route::get('/test', 'TestController@index');
+Route::get('/test2/{post}', [PostController::class, 'list_test']);
+Route::get('/test', [TestController::class, 'index']);
 
 Auth::routes();
-Route::get('/logout', 'Auth\\LoginController@logout');
+Route::get('/logout', [Auth\LoginController::class, 'logout']);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', 'ProfileController@index');
-    Route::post('/profile', 'ProfileController@update');
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/profile', [ProfileController::class, 'update']);
 });
 
 /// Admin Start
-Route::prefix('admin')->middleware('auth', 'isAdmin')->namespace('Admin')->group(function () {
-    Route::get('/', 'AdminController@index');
-    Route::resource('/roles', 'RolesController');
-    Route::resource('/permissions', 'PermissionsController');
-    Route::resource('/users', 'UsersController');
+Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
+    Route::get('/', [Admin\AdminController::class, 'index']);
+    Route::resource('/roles', Admin\RolesController::class);
+    Route::resource('/permissions', Admin\PermissionsController::class);
+    Route::resource('/users', Admin\UsersController::class);
 
-    Route::resource('/pages', 'PagesController');
-    Route::resource('/activitylogs', 'ActivityLogsController')->only([
+    Route::resource('/pages', Admin\PagesController::class);
+    Route::resource('/activitylogs', Admin\ActivityLogsController::class)->only([
         'index', 'show', 'destroy',
     ]);
-    Route::resource('/settings', 'SettingsController');
-    Route::resource('/banners', 'BannersController');
-    Route::resource('/posts', 'PostsController');
+    Route::resource('/settings', Admin\SettingsController::class);
+    Route::resource('/banners', Admin\BannersController::class);
+    Route::resource('/posts', Admin\PostsController::class);
 
-    Route::resource('/tags', 'TagsController');
+    Route::resource('/tags', Admin\TagsController::class);
 
-    Route::post('/banners/{id}/status', 'BannersController@status')->name('banners.status');
-    Route::resource('/statics', 'StaticsController');
+    Route::post('/banners/{id}/status', [Admin\BannersController::class, 'status'])->name('banners.status');
+    Route::resource('/statics', Admin\StaticsController::class);
 
     // Route::resource('admin/tasks', 'Admin\\TasksController');
-    Route::GET('/tools/status', 'ToolsController@status');
+    Route::GET('/tools/status', [Admin\ToolsController::class, 'status']);
 });
 
 Route::prefix('admin')->middleware()->group(function () {
-    // Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
-    // Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
+    // Route::get('generator', ['uses' => [\Appzcoder\LaravelAdmin\Controllers\ProcessController::class, 'getGenerator']]);
+    // Route::post('generator', ['uses' => [\Appzcoder\LaravelAdmin\Controllers\ProcessController::class, 'postGenerator']]);
 });
 
 // Route::group(['middleware'=>['auth', 'isAdmin' ] ,  ] , function(){
@@ -56,7 +71,7 @@ Route::prefix('admin')->middleware()->group(function () {
 
 /// User WWW Start
 
-Route::resource('posts', 'PostController')->only([
+Route::resource('posts', PostController::class)->only([
     'index',  'store', 'show', 'create', 'update', 'destroy',
 ]);
 
@@ -64,24 +79,24 @@ Route::resource('posts', 'PostController')->only([
 //     'index',  'store', 'show', 'create', 'update', 'destroy'
 // ]);
 
-Route::resource('customers', 'CustController')->only([
+Route::resource('customers', CustController::class)->only([
     'index',  'store', 'show', 'create', 'update', 'destroy',
 ]);
 
-Route::get('inputPassword', 'CustController@inputPassword')->name('inputPassword');
+Route::get('inputPassword', [CustController::class, 'inputPassword'])->name('inputPassword');
 
-Route::get('tags/{tag}', 'TagController@index');
+Route::get('tags/{tag}', [TagController::class, 'index']);
 
-Route::get('click', 'ClickController@redirect');
-Route::get('navigate', 'ClickController@navigate');
+Route::get('click', [ClickController::class, 'redirect']);
+Route::get('navigate', [ClickController::class, 'navigate']);
 
-Route::resource('/upsos', 'UpsoController');
-Route::resource('/managers', 'ManagerController');
-Route::get('/managers-list', 'ManagerController@list')->name('managers.list');
+Route::resource('/upsos', UpsoController::class);
+Route::resource('/managers', ManagerController::class);
+Route::get('/managers-list', [ManagerController::class, 'list'])->name('managers.list');
 
-Route::get('/managers-test/{manager}', 'ManagerController@test');
+Route::get('/managers-test/{manager}', [ManagerController::class, 'test']);
 
-Route::post('/comments/save', 'CommentController@store')->name('comments.store');
+Route::post('/comments/save', [CommentController::class, 'store'])->name('comments.store');
 
 /// User WWW END
 

@@ -37,6 +37,5 @@ class RecaptchaController extends Controller
 
         session([$time_key =>  \Carbon\Carbon::now()->toDateTimeString()]);
         session([$session_key=> 1]);
-
     }
 }

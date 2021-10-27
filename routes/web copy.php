@@ -13,9 +13,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ToolController;
-use Illuminate\Support\Facades\Route;
-
 use App\Models\Banner;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::post('/upload', [ToolController::class, 'upload'])->name('upload');

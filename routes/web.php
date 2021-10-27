@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UpsoController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ClickController;
@@ -9,6 +8,7 @@ use App\Http\Controllers\CustController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecapchaController;
@@ -16,12 +16,11 @@ use App\Http\Controllers\RecaptchaController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\UpsoController;
 use App\Http\Controllers\UtilsController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\ManagerController;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::post('/upload', [ToolController::class, 'upload'])->name('upload');

@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UpsoType extends Model
 {
     use SoftDeletes;
+
     public function upsos()
     {
-        return $this->hasMany( Upso::class);
+        return $this->hasMany(Upso::class);
     }
 }

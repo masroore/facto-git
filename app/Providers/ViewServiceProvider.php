@@ -24,13 +24,13 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
         // $user_menus = [
         //     ['key' => 'kr', 'title' =>'한국야동', 'type'=>'gallery' ,'link'=>'/posts?cat=1'],
         //     ['key' => 'jp', 'title' =>'일본야동', 'type'=>'gallery','link'=>'/posts?cat=2'],
         //     ['key' => 'asia', 'title' =>'동양야동', 'type'=>'gallery','link'=>'/posts?cat=3'],
         //     ['key' => 'western', 'title' =>'서양야동', 'type'=>'gallery','link'=>'/posts?cat=4'],
-            
+
         //     ['key' => 'bbs', 'title' =>'서양야동', 'type'=>'dropdown','link'=>''],
 
         //     ['key' => 'torrent', 'title' =>'av토렌트', 'type'=>'outlink','link'=>'/'],
@@ -43,6 +43,5 @@ class ViewServiceProvider extends ServiceProvider
 
         // View::composer( '*' , $user_menus );
         // View::share( '*', $user_menus );
-
     }
 }

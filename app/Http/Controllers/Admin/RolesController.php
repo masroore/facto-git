@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Role;
 use App\Permission;
+use App\Role;
 use Illuminate\Http\Request;
 
 class RolesController extends Controller
@@ -19,7 +19,7 @@ class RolesController extends Controller
         $keyword = $request->get('search');
         $perPage = 15;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $roles = Role::where('name', 'LIKE', "%$keyword%")->orWhere('label', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {

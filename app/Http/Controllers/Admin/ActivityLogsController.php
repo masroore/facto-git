@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Spatie\Activitylog\Models\Activity;
+use App\Http\Requests;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogsController extends Controller
 {
@@ -20,7 +19,7 @@ class ActivityLogsController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $activitylogs = Activity::where('description', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {

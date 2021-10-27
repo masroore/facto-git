@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use File;
+use Illuminate\Console\Command;
 
 class MakeViewCommand extends Command
 {
@@ -15,8 +15,6 @@ class MakeViewCommand extends Command
         parent::__construct();
     }
 
-    
-    
     public function handle()
     {
         $view = $this->argument('view');
@@ -25,9 +23,9 @@ class MakeViewCommand extends Command
 
         $this->createDir($path);
 
-        if (File::exists($path))
-        {
+        if (File::exists($path)) {
             $this->error("File {$path} already exists!");
+
             return;
         }
 
@@ -38,7 +36,7 @@ class MakeViewCommand extends Command
 
     public function viewPath($view)
     {
-        $view = str_replace('.', '/', $view) . '.blade.php';
+        $view = str_replace('.', '/', $view).'.blade.php';
 
         $path = "resources/views/{$view}";
 
@@ -49,10 +47,8 @@ class MakeViewCommand extends Command
     {
         $dir = dirname($path);
 
-        if (!file_exists($dir))
-        {
+        if (! file_exists($dir)) {
             mkdir($dir, 0775, true);
         }
     }
-
 }

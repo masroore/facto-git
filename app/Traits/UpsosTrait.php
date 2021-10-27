@@ -1,14 +1,10 @@
-<?php 
+<?php
 
 namespace App\Traits;
 
-
-trait UpsosTrait 
+trait UpsosTrait
 {
-
-    function get_upsos(){
-        
+    public function get_upsos()
+    {
     }
-
-
 }

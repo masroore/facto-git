@@ -6,11 +6,13 @@ use Illuminate\View\Component;
 
 class Sidebar extends Component
 {
-    public $title , $info ;
-    public function __construct( $title, $info)
+    public $title;
+    public $info;
+
+    public function __construct($title, $info)
     {
-        $this->title = $title ;
-        $this->info = $info ;
+        $this->title = $title;
+        $this->info = $info;
     }
 
     public function render()
@@ -18,10 +20,11 @@ class Sidebar extends Component
         return view('components.sidebar');
     }
 
-    function lists(){
+    public function lists()
+    {
         return [
-            'a', 
-            'b'
+            'a',
+            'b',
         ];
     }
 }

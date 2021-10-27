@@ -5,13 +5,11 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class ClearExpiredCommand extends Command
 {
-    
-
     protected $signature = 'cache:clear-expired';
 
     protected $description = 'Remove all expired cache file/folder';
@@ -27,7 +25,7 @@ class ClearExpiredCommand extends Command
 
         $cacheDisk = [
             'driver' => 'local',
-            'root' => config('cache.stores.file.path')
+            'root' => config('cache.stores.file.path'),
         ];
 
         config(['filesystems.disks.fcache' => $cacheDisk]);
@@ -40,27 +38,25 @@ class ClearExpiredCommand extends Command
      */
     public function handle()
     {
-
         $url = 'https://yagong21.com/clear-cache';
 
-        $response = Http::get( $url );
+        $response = Http::get($url);
 
         dd();
-        
-        dd( $response );
+
+        dd($response);
 
         dd();
 
         echo "\n\n";
-        echo 'start : ' . Carbon::now()->toDateTimeString() . "\n" ;
+        echo 'start : '.Carbon::now()->toDateTimeString()."\n";
 
         $this->deleteExpiredFiles();
         $this->deleteEmptyFolders();
         $this->showResults();
 
-        echo 'end : ' . Carbon::now()->toDateTimeString() . "\n" ;
+        echo 'end : '.Carbon::now()->toDateTimeString()."\n";
         echo "\n\n";
-        
     }
 
     private function deleteExpiredFiles()
@@ -69,9 +65,9 @@ class ClearExpiredCommand extends Command
         $this->output->progressStart(count($files));
 
         // Loop the files and get rid of any that have expired
-        foreach($files as $key => $cachefile) {
+        foreach ($files as $key => $cachefile) {
             // Ignore files that named with dot(.) at the begining e.g. .gitignore
-            if(substr($cachefile, 0, 1) == '.') {
+            if (substr($cachefile, 0, 1) == '.') {
                 continue;
             }
 
@@ -82,7 +78,7 @@ class ClearExpiredCommand extends Command
             $expire = substr($contents, 0, 10);
 
             // See if we have expired
-            if(time() >= $expire) {
+            if (time() >= $expire) {
                 // Delete the file
                 $this->expiredFileSize += Storage::disk('fcache')->size($cachefile);
                 Storage::disk('fcache')->delete($cachefile);
@@ -101,8 +97,8 @@ class ClearExpiredCommand extends Command
         $directories = Storage::disk('fcache')->allDirectories();
         $dirCount = count($directories);
         // looping backward to make sure subdirectories are deleted first
-        while(--$dirCount >= 0) {
-            if(!Storage::disk('fcache')->allFiles($directories[$dirCount])) {
+        while (--$dirCount >= 0) {
+            if (! Storage::disk('fcache')->allFiles($directories[$dirCount])) {
                 Storage::disk('fcache')->deleteDirectory($directories[$dirCount]);
             }
         }
@@ -112,8 +108,8 @@ class ClearExpiredCommand extends Command
     {
         $expiredFileSize = $this->formatBytes($this->expiredFileSize);
         $activeFileSize = $this->formatBytes($this->activeFileSize);
-        
-        if($this->expiredFileCount) {
+
+        if ($this->expiredFileCount) {
             $this->info("✔ {$this->expiredFileCount} expired cache files removed");
             $this->info("✔ {$expiredFileSize} disk cleared");
         } else {
@@ -125,9 +121,9 @@ class ClearExpiredCommand extends Command
 
     private function formatBytes($size, $precision = 2)
     {
-        $unit = ['Byte','KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+        $unit = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
-        for($i = 0; $size >= 1024 && $i < count($unit)-1; $i++){
+        for ($i = 0; $size >= 1024 && $i < count($unit) - 1; $i++) {
             $size /= 1024;
         }
 

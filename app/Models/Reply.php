@@ -9,7 +9,8 @@ class Reply extends Model
 {
     protected $table = 'replies';
 
-    function customer(){
-        return $this->belongsTo( Customer::class );
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

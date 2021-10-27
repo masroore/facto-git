@@ -20,7 +20,7 @@ class CreateCustomersTable extends Migration
             $table->integer('ref_id')->nullable();
             // $table->integer('depth')->default(1);
             $table->integer('order')->default(0);
-            
+
             $table->string('name');
             $table->string('password');
             $table->string('email')->default('');

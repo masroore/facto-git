@@ -18,7 +18,7 @@ class PermissionsController extends Controller
         $keyword = $request->get('search');
         $perPage = 15;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $permissions = Permission::where('name', 'LIKE', "%$keyword%")->orWhere('label', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {

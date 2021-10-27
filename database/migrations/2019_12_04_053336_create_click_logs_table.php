@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateClickLogsTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateClickLogsTable extends Migration
             $table->date('click_date');
             $table->integer('count')->default(1);
 
-            $table->index( [ 'post_id', 'cat_id', 'click_date']);
+            $table->index(['post_id', 'cat_id', 'click_date']);
             $table->timestamps();
         });
     }

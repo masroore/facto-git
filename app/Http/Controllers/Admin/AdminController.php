@@ -12,9 +12,8 @@ class AdminController extends Controller
      *
      * @return void
      */
-    public function index( Request $request)
+    public function index(Request $request)
     {
-        
         return view('admin.dashboard');
     }
 }

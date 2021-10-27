@@ -19,7 +19,7 @@ class CreateUpsosTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->boolean('isPremium')->default(false);
             $table->unsignedBigInteger('region_id');
-            $table->integer('show_order')->default(3);  //  1-공지 2-프리미엄 3-상위고정 4-이벤트 5-일반 
+            $table->integer('show_order')->default(3);  //  1-공지 2-프리미엄 3-상위고정 4-이벤트 5-일반
             $table->string('thumb_path')->nullable();
             $table->string('op_hour')->nullable();
             $table->string('phone')->nullable();
@@ -30,12 +30,12 @@ class CreateUpsosTable extends Migration
             $table->string('site_url')->nullable();
             $table->string('site_phone')->nullable();
             $table->integer('visits')->default(0);
-            $table->string('status')->default('Active') ; // Active / Hold / AdminDeleted / UserDeleted
+            $table->string('status')->default('Active'); // Active / Hold / AdminDeleted / UserDeleted
             $table->softDeletes();
             $table->timestamps();
         });
     }
- 
+
     /**
      * Reverse the migrations.
      *

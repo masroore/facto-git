@@ -8,29 +8,28 @@ use Illuminate\Support\Facades\Storage;
 
 class UtilsController extends Controller
 {
-
     private $expiredFileCount;
     private $expiredFileSize;
     private $activeFileCount;
     private $activeFileSize;
 
-    protected function initCache(){
-
+    protected function initCache()
+    {
         $cacheDisk = [
             'driver' => 'local',
-            'root' => config('cache.stores.file.path')
+            'root' => config('cache.stores.file.path'),
         ];
 
         config(['filesystems.disks.fcache' => $cacheDisk]);
     }
 
-    function cacheClear(){
-
+    public function cacheClear()
+    {
         $time = 60 * 10;
         ini_set('max_execution_time', $time);
-        
+
         echo "\n\n";
-        echo 'start : ' . Carbon::now()->toDateTimeString() . "\n" ;
+        echo 'start : '.Carbon::now()->toDateTimeString()."\n";
 
         $this->initCache();
 
@@ -38,23 +37,21 @@ class UtilsController extends Controller
         $this->deleteEmptyFolders();
         $this->showResults();
 
-        echo 'end : ' . Carbon::now()->toDateTimeString() . "\n" ;
+        echo 'end : '.Carbon::now()->toDateTimeString()."\n";
         echo "\n\n";
     }
-
-
 
     private function deleteExpiredFiles()
     {
         $files = Storage::disk('fcache')->allFiles();
-        echo "all files = " . count( $files ) . "<br>" ;
+        echo 'all files = '.count($files).'<br>';
 
         // $this->output->progressStart(count($files));
 
         // Loop the files and get rid of any that have expired
-        foreach($files as $key => $cachefile) {
+        foreach ($files as $key => $cachefile) {
             // Ignore files that named with dot(.) at the begining e.g. .gitignore
-            if(substr($cachefile, 0, 1) == '.') {
+            if (substr($cachefile, 0, 1) == '.') {
                 continue;
             }
 
@@ -65,7 +62,7 @@ class UtilsController extends Controller
             $expire = substr($contents, 0, 10);
 
             // See if we have expired
-            if(time() >= $expire) {
+            if (time() >= $expire) {
                 // Delete the file
                 $this->expiredFileSize += Storage::disk('fcache')->size($cachefile);
                 Storage::disk('fcache')->delete($cachefile);
@@ -76,7 +73,7 @@ class UtilsController extends Controller
             }
             // $this->output->progressAdvance();
         }
-        echo "all files counted . <br>";
+        echo 'all files counted . <br>';
         // $this->output->progressFinish();
     }
 
@@ -85,8 +82,8 @@ class UtilsController extends Controller
         $directories = Storage::disk('fcache')->allDirectories();
         $dirCount = count($directories);
         // looping backward to make sure subdirectories are deleted first
-        while(--$dirCount >= 0) {
-            if(!Storage::disk('fcache')->allFiles($directories[$dirCount])) {
+        while (--$dirCount >= 0) {
+            if (! Storage::disk('fcache')->allFiles($directories[$dirCount])) {
                 Storage::disk('fcache')->deleteDirectory($directories[$dirCount]);
             }
         }
@@ -96,29 +93,28 @@ class UtilsController extends Controller
     {
         $expiredFileSize = $this->formatBytes($this->expiredFileSize);
         $activeFileSize = $this->formatBytes($this->activeFileSize);
-        
-        if($this->expiredFileCount) {
+
+        if ($this->expiredFileCount) {
             // $this->info("✔ {$this->expiredFileCount} expired cache files removed");
             // $this->info("✔ {$expiredFileSize} disk cleared");
-            echo "✔ {$this->expiredFileCount} expired cache files removed <br>" ; 
+            echo "✔ {$this->expiredFileCount} expired cache files removed <br>";
             echo "✔ {$expiredFileSize} disk cleared <br>";
         } else {
             // $this->info('✔ No expired cache file found!');
-            echo "✔ No expired cache file found! <br>" ;
+            echo '✔ No expired cache file found! <br>';
         }
         // $this->line("✔ {$this->activeFileCount} non-expired cache files remaining");
         // $this->line("✔ {$activeFileSize} disk space taken by non-expired cache files");
 
-        echo "✔ {$this->activeFileCount} non-expired cache files remaining. <br>" ;
-        echo "✔ {$activeFileSize} disk space taken by non-expired cache files.<br>" ;
-
+        echo "✔ {$this->activeFileCount} non-expired cache files remaining. <br>";
+        echo "✔ {$activeFileSize} disk space taken by non-expired cache files.<br>";
     }
 
     private function formatBytes($size, $precision = 2)
     {
-        $unit = ['Byte','KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+        $unit = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
-        for($i = 0; $size >= 1024 && $i < count($unit)-1; $i++){
+        for ($i = 0; $size >= 1024 && $i < count($unit) - 1; $i++) {
             $size /= 1024;
         }
 

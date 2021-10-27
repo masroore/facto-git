@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Allowance extends Model
 {
-    function managers(){
-        return $this->belongsToMany( Manager::class );
+    public function managers()
+    {
+        return $this->belongsToMany(Manager::class);
     }
 
     // function count_managers( $upso_type_id){
@@ -18,7 +19,6 @@ class Allowance extends Model
     //         return $this->managers()->count();
     //     }
     // }
-
 
     // public function managersCount()
     // {
@@ -39,5 +39,4 @@ class Allowance extends Model
 
     //     return ($related) ? $related->aggregate : 0;
     // }
-
 }

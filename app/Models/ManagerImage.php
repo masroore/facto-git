@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ManagerImage extends Model
 {
     protected $fillable = [];
-    function manager(){
-        return $this->belongsTo( Manager::class);
+
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
     }
 }

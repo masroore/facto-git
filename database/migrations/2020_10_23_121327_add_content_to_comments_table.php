@@ -16,15 +16,15 @@ class AddContentToCommentsTable extends Migration
         Schema::dropIfExists('comments');
 
         Schema::create('comments', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->bigInteger('user_id');
-                $table->bigInteger('commentable_id');
-                $table->string('commentable_type');
-                $table->bigInteger('parent_id')->nullable();
-                $table->text('content');
-                $table->timestamps();
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('commentable_id');
+            $table->string('commentable_type');
+            $table->bigInteger('parent_id')->nullable();
+            $table->text('content');
+            $table->timestamps();
 
-                $table->index(['commentable_id', 'commentable_type']);
+            $table->index(['commentable_id', 'commentable_type']);
         });
     }
 

@@ -14,22 +14,19 @@ class CustomerController extends Controller
         $this->middleware('auth')->only(['destroy', 'update', 'show']);
     }
 
-
-
-    public function index( Request $request )
+    public function index(Request $request)
     {
-        $ccat_id  = $request->ccat_id ;
-        if( ! $ccat_id){
-            $ccat_id = 9 ;
+        $ccat_id = $request->ccat_id;
+        if (! $ccat_id) {
+            $ccat_id = 9;
         }
-        
-        $ccat = Ccat::find( $ccat_id );
+
+        $ccat = Ccat::find($ccat_id);
         $customers = Customer::where('ccat_id', $ccat_id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(25);
         // dd( $customers->toArray());
         return view('customers.index', compact('ccat', 'customers'));
-
     }
 
     /**
@@ -37,13 +34,12 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( Request $request )
+    public function create(Request $request)
     {
-        $ccat_id  = $request->ccat_id ;
-        $ccat = Ccat::find( $ccat_id );
-         
+        $ccat_id = $request->ccat_id;
+        $ccat = Ccat::find($ccat_id);
+
         return view('customers.create', compact('ccat'));
-        
     }
 
     /**
@@ -55,7 +51,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'ccat_id' => 'required',
+            'ccat_id' => 'required',
             'name' => 'required|string|max:12|min:2',
             'password' => 'required|string|max:12|min:5',
 
@@ -66,15 +62,15 @@ class CustomerController extends Controller
         $customer = Customer::firstOrCreate(
             [
                 'ccat_id' =>  $request->ccat_id,
-                'name' =>  $request->name ,
+                'name' =>  $request->name,
                 'password' =>  $request->password,
                 'title' =>  $request->title,
                 'content' =>  $request->content,
                 'user_ip' => request()->ip(),
             ]
         );
-        return redirect('/customers?ccat_id=' . $request->ccat_id )->with('flash_message', '글이 추가 되었습니다. ');
 
+        return redirect('/customers?ccat_id='.$request->ccat_id)->with('flash_message', '글이 추가 되었습니다. ');
     }
 
     /**
@@ -87,14 +83,13 @@ class CustomerController extends Controller
     {
         // dd($customer->toArray());
         $user = Auth::user();
-        if( ! $user->isAdmin()){
+        if (! $user->isAdmin()) {
             return redirect()->back()->with('error', '권한이 없습니다.');
         }
-        
-        $page= $request->page;
 
-        return view('customers.show', compact( 'customer', 'page'));
+        $page = $request->page;
 
+        return view('customers.show', compact('customer', 'page'));
     }
 
     /**
@@ -128,12 +123,11 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-
-        $ccat_id = $customer->ccat->id ; 
+        $ccat_id = $customer->ccat->id;
         // dd($ccat_id);
-        
-        Customer::destroy($customer->id);
-        return redirect('/customers?ccat_id=' . $ccat_id )->with('flash_message', '삭제되었습니다.');
 
+        Customer::destroy($customer->id);
+
+        return redirect('/customers?ccat_id='.$ccat_id)->with('flash_message', '삭제되었습니다.');
     }
 }

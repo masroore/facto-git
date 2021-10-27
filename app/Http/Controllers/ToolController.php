@@ -36,7 +36,8 @@ class ToolController extends Controller
                 $uploader_points = (int) ($data['uploader_points'] ?? 0);
 
                 if ($user->points < $download_points) {
-                    notify()->error('최소 ' . $download_points . ' 포인트가 필요합니다.');
+                    notify()->error('최소 '.$download_points.' 포인트가 필요합니다.');
+
                     return redirect()->back();
                 }
                 // $user->points = $user->points - $user_file->points_charged ;
@@ -47,7 +48,6 @@ class ToolController extends Controller
                     $uploader = $user_file->post->user;
                     $uploader->increment('points', $uploader_points);
                     $uploader->setLevel();
-
                 }
 
                 // $user->save();
@@ -57,7 +57,6 @@ class ToolController extends Controller
                 $download->points_charged = $download_points;
                 $user_file->downloads()->save($download);
             }
-
         }
 
         $user_file->increment('download_count');
@@ -65,14 +64,14 @@ class ToolController extends Controller
         $file_server = config('site-common.file-server');
         // $file_server = str_replace('/file-storage', '', $file_server );
 
-        $main_url = $file_server . '/' . $user_file->file_path;
+        $main_url = $file_server.'/'.$user_file->file_path;
         // header("Content-disposition:attachment; filename=$user_file->org_file_name");
         // readfile($main_url);
 
         session()->flash('newurl', $main_url);
         session()->flash('org_file_name', $user_file->org_file_name);
-        return redirect()->route('download_redirect');
 
+        return redirect()->route('download_redirect');
     }
 
     public function download_torrent(Request $request)
@@ -100,7 +99,8 @@ class ToolController extends Controller
                 $uploader_points = (int) ($data['uploader_points'] ?? 0);
 
                 if ($user->points < $download_points) {
-                    notify()->error('최소 ' . $download_points . ' 포인트가 필요합니다.');
+                    notify()->error('최소 '.$download_points.' 포인트가 필요합니다.');
+
                     return redirect()->back();
                 }
                 $user->decrement('points', $download_points);
@@ -121,7 +121,6 @@ class ToolController extends Controller
                 //     'points_charged'=> $torrent_file->points_charged,
                 // ];
                 $torrent_file->downloads()->save($download);
-
             }
         }
 
@@ -131,21 +130,20 @@ class ToolController extends Controller
         // $file_server = str_replace('/file-storage', '', $file_server );
 
         // dd($torrent_file->org_file_name);
-        $main_url = $file_server . '/' . $torrent_file->file_path;
+        $main_url = $file_server.'/'.$torrent_file->file_path;
         // header("Content-disposition:attachment; filename=$torrent_file->org_file_name");
         // readfile($main_url);
 
         session()->flash('newurl', $main_url);
         session()->flash('org_file_name', $torrent_file->org_file_name);
-        return redirect()->route('download_redirect');
 
+        return redirect()->route('download_redirect');
     }
 
     public function upload(Request $request)
     {
         // $CKEditorFuncNum = $request->input('CKEditorFuncNum');
         // dd($CKEditorFuncNum);
-
 
         $validator = Validator::make($request->all(), [
             // 'upload' => 'required|mimetypes:image/png,image/bmp,image/apng,image/jpeg,image/gif'
@@ -172,8 +170,8 @@ class ToolController extends Controller
             //filename to store
             // $filenametostore = $filename.'_'.time().'.'.$extension;
             $milliseconds = (int) (round(microtime(true) * 1000000));
-            $filenametostore = $milliseconds . '.' . $extension;
-            
+            $filenametostore = $milliseconds.'.'.$extension;
+
             $ext = $request->file('upload')->extension();
 
             $path = 'editor'; // . '/' . $milliseconds . '.' . $ext ;
@@ -189,7 +187,7 @@ class ToolController extends Controller
             // dd($vvpath) ;
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
             // // $url = asset('storage/uploads/'.$filenametostore);
-            $url = '/storage/uploads/editor/' . $filenametostore ;
+            $url = '/storage/uploads/editor/'.$filenametostore;
 
             $msg = '이미지 파일이 업로드 되었습니다.';
             $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
@@ -222,7 +220,6 @@ class ToolController extends Controller
 
         // return response()->json( $data);
         // dd($request->all());
-
     }
 
     public function download_test(Request $request)
@@ -252,7 +249,8 @@ class ToolController extends Controller
                 $uploader_points = (int) ($data['uploader_points'] ?? 0);
 
                 if ($user->points < $download_points) {
-                    notify()->error('최소 ' . $download_points . ' 포인트가 필요합니다.');
+                    notify()->error('최소 '.$download_points.' 포인트가 필요합니다.');
+
                     return redirect()->back();
                 }
                 $user->decrement('points', $download_points);
@@ -273,7 +271,6 @@ class ToolController extends Controller
                 //     'points_charged'=> $torrent_file->points_charged,
                 // ];
                 $torrent_file->downloads()->save($download);
-
             }
         }
 
@@ -283,12 +280,13 @@ class ToolController extends Controller
         // $file_server = str_replace('/file-storage', '', $file_server );
 
         // dd($torrent_file->org_file_name);
-        $main_url = $file_server . '/' . $torrent_file->file_path;
+        $main_url = $file_server.'/'.$torrent_file->file_path;
         // header("Content-disposition:attachment; filename=$torrent_file->org_file_name");
         // readfile($main_url);
 
         session()->flash('newurl', $main_url);
         session()->flash('org_file_name', $torrent_file->org_file_name);
+
         return redirect()->route('download_redirect');
 
         // header("Cache-Control: public");
@@ -321,6 +319,5 @@ class ToolController extends Controller
         // notify()->success('다운로드 되었습니다.');
 
         return redirect()->back()->refresh();
-
     }
 }

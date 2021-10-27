@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
 {
-    function index( Request $request){
+    public function index(Request $request)
+    {
         // $popups = Banner::where('division', 4)
         //             ->where('status', 'A')
         //             ->get();
 
-        $seconds = 60 * 60 * 48 ;
+        $seconds = 60 * 60 * 48;
         $cache_key = 'banners-4';
-        $popups = Cache::remember( $cache_key,  $seconds, function ()  {
+        $popups = Cache::remember($cache_key, $seconds, function () {
             return Banner::where('division', 4)
             ->where('status', 'A')
             ->get();

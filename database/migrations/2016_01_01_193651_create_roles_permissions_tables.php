@@ -13,7 +13,7 @@ class CreateRolesPermissionsTables extends Migration
     public function up()
     {
         return false;
-        
+
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

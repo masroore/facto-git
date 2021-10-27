@@ -20,9 +20,9 @@ class CreateRolesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique(); // edit posts
             $table->string('label')->nullable();
-            $table->boolean('isAdminRole')->default( false ); 
-            // $table->integer('grade')->default( 1 ); 
-            // $table->boolean('isLevelNeedsRole')->default( false ); 
+            $table->boolean('isAdminRole')->default(false);
+            // $table->integer('grade')->default( 1 );
+            // $table->boolean('isLevelNeedsRole')->default( false );
             $table->timestamps();
         });
     }

@@ -3,19 +3,25 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cat;
-use Livewire\Component;
 use App\Models\Customer;
-use Livewire\WithPagination;
 use Illuminate\Support\MessageBag;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Customers extends Component
 {
     use WithPagination;
-    // use MessageBag; 
-    
+    // use MessageBag;
+
     public $ccat_id;
-    public $mode, $customer_id, $message, $search;
-    public $password, $title, $name, $content  ;
+    public $mode;
+    public $customer_id;
+    public $message;
+    public $search;
+    public $password;
+    public $title;
+    public $name;
+    public $content;
 
     protected $queryString = [
         'ccat_id',
@@ -62,6 +68,7 @@ class Customers extends Component
 
         $customer = Customer::where('id', $this->customer_id)->first();
         $ccat = Cat::find($this->ccat_id);
+
         return view('livewire.customers', [
             'ccat'=> $ccat,
             'customer'=> $customer,
@@ -69,42 +76,44 @@ class Customers extends Component
         ]);
     }
 
-    function mount( $ccatid){
+    public function mount($ccatid)
+    {
         // session()->flash('message', 'Post successfully updated.');
         // $this->fill(request()->only('search', 'page'));
         $this->ccat_id = $ccatid;
     }
 
-    function setMode( $mode, $customer_id = null){
+    public function setMode($mode, $customer_id = null)
+    {
         $this->resetPage();
         $this->mode = $mode;
-        $this->customer_id = $customer_id ;
+        $this->customer_id = $customer_id;
     }
 
-    function setPassword( ){
-        $this->checkPassword($this->ccat_id, $this->customer_id , $this->password);
+    public function setPassword()
+    {
+        $this->checkPassword($this->ccat_id, $this->customer_id, $this->password);
     }
 
-    protected function chechkPassword($ccat_id,  $customer_id ,$password){
-
+    protected function chechkPassword($ccat_id, $customer_id, $password)
+    {
         $customer = Customer::where('ccat_id', $ccat_id)
                         ->where('id', $customer_id)
                         ->where('password', $password);
         $exists = $customer->exists();
-        if( $exists ){
+        if ($exists) {
             $this->customer = $customer->first();
         } else {
-            $this->errors['customer'] = 'no Data' ;
+            $this->errors['customer'] = 'no Data';
         }
     }
 
-
-    function saveMessage(){
-
+    public function saveMessage()
+    {
         $customer = Customer::create(
             [
                 'ccat_id' =>  $this->ccat_id,
-                'name' =>  $this->name ,
+                'name' =>  $this->name,
                 'password' =>  $this->password,
                 'title' =>  $this->title,
                 'content' =>  $this->content,
@@ -112,15 +121,15 @@ class Customers extends Component
             ]
         );
 
-        if( $customer ){
+        if ($customer) {
             session()->flash('message', '문의가 입력되었습니다.');
             $this->mode = null;
         }
     }
 
-    function showMe($customer_id ) {
-        $this->customer_id = $customer_id ;
-        $this->mode ='show';
+    public function showMe($customer_id)
+    {
+        $this->customer_id = $customer_id;
+        $this->mode = 'show';
     }
-
 }

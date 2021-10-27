@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests;
 use App\Page;
 use Illuminate\Http\Request;
 
@@ -20,7 +19,7 @@ class PagesController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $pages = Page::where('title', 'LIKE', "%$keyword%")
                 ->orWhere('content', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
@@ -51,11 +50,11 @@ class PagesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'title' => 'required',
-			'content' => 'required'
-		]);
+            'title' => 'required',
+            'content' => 'required',
+        ]);
         $requestData = $request->all();
-        
+
         Page::create($requestData);
 
         return redirect('admin/pages')->with('flash_message', 'Page added!');
@@ -100,11 +99,11 @@ class PagesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'title' => 'required',
-			'content' => 'required'
-		]);
+            'title' => 'required',
+            'content' => 'required',
+        ]);
         $requestData = $request->all();
-        
+
         $page = Page::findOrFail($id);
         $page->update($requestData);
 

@@ -40,39 +40,38 @@ class CommentController extends Controller
         // dd( $request->all());
 
         $this->validate($request, [
-			'customer_id' => 'required|integer',
+            'customer_id' => 'required|integer',
             'content' => 'required|string|min:2|max:1000',
         ]);
-        
-        $customer_id = $request->customer_id ;
+
+        $customer_id = $request->customer_id;
         $content = $request->content;
-        
-        if( Auth::check() && Auth::user()->isAdmin() ) {
+
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $user = Auth::user();
             $name = $user->nick;
         } else {
-            $customer = Customer::find( $customer_id);
-                
-            $key = 'cust-pass-' .$customer->id ;
-            if(  session()->get( $key ) != 'ok' ) {
+            $customer = Customer::find($customer_id);
+
+            $key = 'cust-pass-'.$customer->id;
+            if (session()->get($key) != 'ok') {
                 return redirect()->back()->with('error', '권한이 없습니다.');
             }
-            $name = $customer->name ;
+            $name = $customer->name;
         }
 
         $comment = new Comment;
-        if( isset( $user ) ){
-            $comment->user_id = $user->id ;
+        if (isset($user)) {
+            $comment->user_id = $user->id;
         }
-        $comment->customer_id = $customer_id ;
-        $comment->name = $name ;
-        $comment->content = $content ;
+        $comment->customer_id = $customer_id;
+        $comment->name = $name;
+        $comment->content = $content;
         $comment->save();
 
         return redirect()->route('customers.show', [
                 'customer'=>$customer_id,
             ]);
-
     }
 
     /**

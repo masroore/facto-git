@@ -17,19 +17,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Cloud Filesystem Disk
-    |--------------------------------------------------------------------------
-    |
-    | Many applications store files both locally and in the cloud. For this
-    | reason, you may specify a default "cloud" driver here. This driver
-    | will be bound as the Cloud disk implementation in the container.
-    |
-    */
-
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
@@ -47,7 +34,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-        
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -62,6 +49,8 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
         'backup' => [
@@ -69,19 +58,19 @@ return [
             'host' => '207.148.111.125',
             'username' => 'www',
             'password' => 'rjatortkdeks',
-        
+
             // Settings for SSH key based authentication...
             // 'privateKey' => '/path/to/privateKey',
             // 'password' => 'encryption-password',
-        
+
             // Optional SFTP Settings...
             'port' => 9989,
             'root' => '/data/www/new-backup/yagong',
             'timeout' => 30,
-            // 'directoryPerm'=> 0755, // director - default 0744 
-            'directoryPerm'=> 0775, // director - default 0744 
+            // 'directoryPerm'=> 0755, // director - default 0744
+            'directoryPerm'=> 0775, // director - default 0744
             'visibility' => 'private', // defaults to 'private'
-            'permPublic' => 0664 // file mod ..
+            'permPublic' => 0664, // file mod ..
 
             // 'cache' => [
             //     'store' => 'memcached',
@@ -95,16 +84,16 @@ return [
             'host' => '93.157.63.82',
             'username' => 'www',
             'password' => 'rjatortkdeks',
-        
+
             // Settings for SSH key based authentication...
             // 'privateKey' => '/path/to/privateKey',
             // 'password' => 'encryption-password',
-        
+
             // Optional SFTP Settings...
             'port' => 19989,
             'root' => '/data/www/backup/yagong/',
             'timeout' => 30,
-            'directoryPerm'=> 0775, // director - default 0744  755 
+            'directoryPerm'=> 0775, // director - default 0744  755
             'visibility' => 'private', // defaults to 'private'
             // 'permPublic' => 0554 // file mod ..
             'permPublic'=>664,
@@ -116,5 +105,22 @@ return [
             // ],
 
         ],
+
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Symbolic Links
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the symbolic links that will be created when the
+    | `storage:link` Artisan command is executed. The array keys should be
+    | the locations of the links and the values should be their targets.
+    |
+    */
+
+    'links' => [
+        public_path('storage') => storage_path('app/public'),
+    ],
+
 ];

@@ -18,7 +18,7 @@ class CreatePagesTable extends Migration
             $table->softDeletes();
             $table->string('title')->nullable();
             $table->text('content')->nullable();
-            });
+        });
     }
 
     /**

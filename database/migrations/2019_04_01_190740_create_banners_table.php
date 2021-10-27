@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBannersTable extends Migration
 {
@@ -23,8 +23,6 @@ class CreateBannersTable extends Migration
             $table->string('visits')->default(0);
             $table->string('status')->default('A');
             $table->timestamps();
-
-
         });
     }
 

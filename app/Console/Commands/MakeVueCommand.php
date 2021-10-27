@@ -17,7 +17,7 @@ class MakeVueCommand extends Command
 
     protected function getStub()
     {
-        return __DIR__ . '/../stubs/vue-component.stub';
+        return __DIR__.'/../stubs/vue-component.stub';
     }
 
     public function handle()
@@ -28,21 +28,21 @@ class MakeVueCommand extends Command
 
         $this->createDir($path);
 
-        if (File::exists($path))
-        {
+        if (File::exists($path)) {
             $this->error("File {$path} already exists!");
+
             return;
         }
 
         // $content = File::get( $this->getStub() );
-        File::put($path,  $this->getContent());
+        File::put($path, $this->getContent());
 
         $this->info("File {$path} created.");
     }
 
     public function viewPath($view)
     {
-        $view = str_replace('.', '/', $view) . '.vue';
+        $view = str_replace('.', '/', $view).'.vue';
         $path = "resources/js/components/{$view}";
 
         return $path;
@@ -51,13 +51,13 @@ class MakeVueCommand extends Command
     public function createDir($path)
     {
         $dir = dirname($path);
-        if (!file_exists($dir))
-        {
+        if (! file_exists($dir)) {
             mkdir($dir, 0775, true);
         }
     }
 
-    protected function getContent(){
+    protected function getContent()
+    {
         return '<script>
     export default {
         data() {
@@ -72,5 +72,4 @@ class MakeVueCommand extends Command
     <!-- Your {Component} component\'s template -->
 </template>';
     }
-
 }

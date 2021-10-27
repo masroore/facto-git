@@ -9,10 +9,10 @@ class Cat extends Model
 {
     use SoftDeletes;
     protected $table = 'cats';
-    protected $fillable = [ 'key', 'title', 'type', 'status'];
+    protected $fillable = ['key', 'title', 'type', 'status'];
 
-    function posts(){
-        return $this->hasMany( \App\Models\Post::class );
+    public function posts()
+    {
+        return $this->hasMany(\App\Models\Post::class);
     }
-
 }

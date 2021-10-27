@@ -28,9 +28,9 @@ class popups extends Component
                     ->where('status', 'A')
                     ->get();
 
-                    // dd($popups->toArray());
+        // dd($popups->toArray());
         return view('components.popups', [
-            'popups'=>$popups
+            'popups'=>$popups,
         ]);
     }
 }

@@ -38,7 +38,8 @@ class WriteInfoCommand extends Command
      */
     public function handle()
     {
-        Log::info( now()->toDateTimeString() );
+        Log::info(now()->toDateTimeString());
+
         return 0;
     }
 }

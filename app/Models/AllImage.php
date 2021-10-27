@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AllImage extends Model
 {
-
-    function all_imagable(){
+    public function all_imagable()
+    {
         return $this->morphTo();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\ClearExpiredCommand;
 use App\Console\Commands\WriteInfoCommand;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -35,7 +35,6 @@ class Kernel extends ConsoleKernel
         // $schedule->command('write:info')->everyMinute();
         // $schedule->command('write:info')->dailyAt('03:40');
         $schedule->command('backup:run')->dailyAt('04:10');
-
     }
 
     /**

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\User;
-use App\Models\Region;
+use App\Models\AllImage;
 use App\Models\Comment;
 use App\Models\Manager;
 use App\Models\Premium;
-use App\Models\AllImage;
+use App\Models\Region;
 use App\Models\UpsoType;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Upso extends Model
@@ -17,18 +17,19 @@ class Upso extends Model
     {
         parent::boot();
         self::deleting(function ($upso) { // before delete() method call this
-            $upso->managers()->each( function( $manager){
+            $upso->managers()->each(function ($manager) {
                 $manager->delete();
             });
 
-            $upso->premium()->each( function( $manager){
+            $upso->premium()->each(function ($manager) {
                 $manager->delete();
             });
         });
     }
 
-    public function premium(){
-        return $this->hasOne( Premium::class );
+    public function premium()
+    {
+        return $this->hasOne(Premium::class);
     }
 
     public function upso_type()
@@ -60,5 +61,4 @@ class Upso extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-
 }

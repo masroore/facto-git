@@ -21,99 +21,86 @@ class DoTest extends Command
 
     public function handle()
     {
-        
         $data = [
-            1,2,3,4,5,6
+            1, 2, 3, 4, 5, 6,
         ];
         $this->permutation($data, 3);
         $this->combination($data, 3);
-
-
     }
 
-    function combination( $data, $len = 2 ){
-
-
+    public function combination($data, $len = 2)
+    {
         $list = [];
-        if( $len ==3 ){
-            foreach( $data as $d1){
-                $t1 = $d1; 
-                foreach ( $data as $d2) {
+        if ($len == 3) {
+            foreach ($data as $d1) {
+                $t1 = $d1;
+                foreach ($data as $d2) {
                     $t2 = $d2;
-                    foreach ( $data as $d3) {
+                    foreach ($data as $d3) {
                         $t3 = $d3;
-                        if( $t1 != $t2 and $t2 != $t3 and $t1 != $t3) {
-
-                            if( ! in_array( [$t3, $t2, $t1], $list  )  and 
-                                ! in_array( [$t3, $t1, $t2], $list  )  and 
-                                ! in_array( [$t2, $t1, $t3], $list  )  and
-                                ! in_array( [$t2, $t3, $t1], $list  )  and
-                                ! in_array( [$t1, $t3, $t2], $list  )    ) 
-                            {
-                                array_push( $list, [ $t1, $t2, $t3]);
+                        if ($t1 != $t2 and $t2 != $t3 and $t1 != $t3) {
+                            if (! in_array([$t3, $t2, $t1], $list) and
+                                ! in_array([$t3, $t1, $t2], $list) and
+                                ! in_array([$t2, $t1, $t3], $list) and
+                                ! in_array([$t2, $t3, $t1], $list) and
+                                ! in_array([$t1, $t3, $t2], $list)) {
+                                array_push($list, [$t1, $t2, $t3]);
                             }
-
-                            
                         }
                     }
                 }
             }
-        } elseif( $len ==2 ){
-            foreach( $data as $d1){
-                $t1 = $d1; 
-                foreach ( $data as $d2) {
+        } elseif ($len == 2) {
+            foreach ($data as $d1) {
+                $t1 = $d1;
+                foreach ($data as $d2) {
                     $t2 = $d2;
-                    if( $t1 != $t2 ) {
-                        if( ! in_array(  [$t2, $t1] , $list  ) ) {
-                            array_push( $list, [ $t1, $t2 ]);    
+                    if ($t1 != $t2) {
+                        if (! in_array([$t2, $t1], $list)) {
+                            array_push($list, [$t1, $t2]);
                         }
                     }
                 }
             }
         }
-        
+
         echo count($list);
         echo "\n";
         $un = array_unique($list, SORT_REGULAR);
 
         echo count($un);
 
-
         return $list;
-
-
     }
 
-    function permutation( $data, $len = 3){
-
-
+    public function permutation($data, $len = 3)
+    {
         $list = [];
-        if( $len ==3 ){
-            foreach( $data as $d1){
-                $t1 = $d1; 
-                foreach ( $data as $d2) {
+        if ($len == 3) {
+            foreach ($data as $d1) {
+                $t1 = $d1;
+                foreach ($data as $d2) {
                     $t2 = $d2;
-                    foreach ( $data as $d3) {
+                    foreach ($data as $d3) {
                         $t3 = $d3;
-                        if( $t1 != $t2 and $t2 != $t3 and $t1 != $t3) {
-                            array_push( $list, [ $t1, $t2, $t3]);
+                        if ($t1 != $t2 and $t2 != $t3 and $t1 != $t3) {
+                            array_push($list, [$t1, $t2, $t3]);
                         }
                     }
                 }
             }
-        } elseif( $len ==2 ){
-            foreach( $data as $d1){
-                $t1 = $d1; 
-                foreach ( $data as $d2) {
+        } elseif ($len == 2) {
+            foreach ($data as $d1) {
+                $t1 = $d1;
+                foreach ($data as $d2) {
                     $t2 = $d2;
-                    if( $t1 != $t2 ) {
-                        array_push( $list, [ $t1, $t2]);
+                    if ($t1 != $t2) {
+                        array_push($list, [$t1, $t2]);
                     }
                 }
             }
         }
-        
-        
+
         echo count($list);
         echo "\n";
         $un = array_unique($list, SORT_REGULAR);
@@ -123,7 +110,5 @@ class DoTest extends Command
         echo "\n";
 
         return $list;
-
-
     }
 }

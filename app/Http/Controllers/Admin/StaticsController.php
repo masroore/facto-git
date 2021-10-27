@@ -2,65 +2,64 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Counter;
-// use benhall14\phpCalendar\Calendar;
-use Carbon\Carbon;
 use App\AccessList;
-use Illuminate\Http\Request;
+// use benhall14\phpCalendar\Calendar;
+use App\Counter;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class StaticsController extends Controller
 {
+    public function makeTwo($val)
+    {
+        if (strlen($val) == 1) {
+            return '0'.$val;
+        }
 
-    function makeTwo($val){
-      if ( strlen($val) == 1) {
-        return '0' . $val;
-      }
-      return $val;
+        return $val;
     }
+
     public function index(Request $request)
     {
-      // dd($request->all());
+        // dd($request->all());
 
-      // $calendar = new Calendar();
-      // $cal= $calendar->draw(date('Y-m-d')); # draw this months calendar
-      $today = Carbon::now();
-      $yy = $request->yy ? $request->yy : $today->year;
-      $mm = $request->mm ? $request->mm : $today->month;
+        // $calendar = new Calendar();
+        // $cal= $calendar->draw(date('Y-m-d')); # draw this months calendar
+        $today = Carbon::now();
+        $yy = $request->yy ? $request->yy : $today->year;
+        $mm = $request->mm ? $request->mm : $today->month;
 
-      $long_month = [1,3,5,7,8,10,12];
-      $short_month = [4,6,9,11];
+        $long_month = [1, 3, 5, 7, 8, 10, 12];
+        $short_month = [4, 6, 9, 11];
 
-      $start_day = '01';
-      if ( in_array( $mm, $long_month) ) {
-        $end_day = '31';
-      } elseif( in_array( $mm , $short_month) ) {
-        $end_day = '30';
-      } else {
-        $end_day = '28';
-      }
+        $start_day = '01';
+        if (in_array($mm, $long_month)) {
+            $end_day = '31';
+        } elseif (in_array($mm, $short_month)) {
+            $end_day = '30';
+        } else {
+            $end_day = '28';
+        }
 
-      // $mm = $this->makeTwo($mm);
+        // $mm = $this->makeTwo($mm);
 
-      $sdate1 = Carbon::createFromDate($yy, $mm, 1);
-      $sdate = implode( '-', [ $yy, $mm, 1]);
-      // / dayOfWeek returns a number between 0 (sunday) and 6 (saturday)
+        $sdate1 = Carbon::createFromDate($yy, $mm, 1);
+        $sdate = implode('-', [$yy, $mm, 1]);
+        // / dayOfWeek returns a number between 0 (sunday) and 6 (saturday)
 
-      $s_day_of_week = $sdate1->dayOfWeek;
+        $s_day_of_week = $sdate1->dayOfWeek;
 
-      $edate = Carbon::createFromDate($yy, $mm, $end_day);
-      $edate = implode( '-', [ $yy, $mm, $end_day]);
+        $edate = Carbon::createFromDate($yy, $mm, $end_day);
+        $edate = implode('-', [$yy, $mm, $end_day]);
 
+        $ref = Carbon::now()->addMinutes(-10);
+        // $realtime_access = AccessList::whereBetween('updated_at', [$ref, $now])->count();
 
-      $ref = Carbon::now()->addMinutes( -10);
-      // $realtime_access = AccessList::whereBetween('updated_at', [$ref, $now])->count();
+        $realtime_access = AccessList::where('updated_at', '>=', $ref)->where('updated_at', '<=', $today)->count();
+        $counters = Counter::whereBetween('date', [$sdate, $edate])->get();
 
-      $realtime_access = AccessList::where('updated_at', '>=', $ref)->where('updated_at', '<=', $today)->count();
-      $counters = Counter::whereBetween('date', [$sdate, $edate])->get();
-
-
-
-      return view('admin.statics.index')
+        return view('admin.statics.index')
               ->with('realtime_access', $realtime_access)
               ->with('counters', $counters)
               ->with('today', $today)

@@ -47,7 +47,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-        
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -69,19 +69,19 @@ return [
             'host' => '207.148.111.125',
             'username' => 'www',
             'password' => 'rjatortkdeks',
-        
+
             // Settings for SSH key based authentication...
             // 'privateKey' => '/path/to/privateKey',
             // 'password' => 'encryption-password',
-        
+
             // Optional SFTP Settings...
             'port' => 9989,
             'root' => '/data/www/new-backup/yagong',
             'timeout' => 30,
-            // 'directoryPerm'=> 0755, // director - default 0744 
-            'directoryPerm'=> 0775, // director - default 0744 
+            // 'directoryPerm'=> 0755, // director - default 0744
+            'directoryPerm'=> 0775, // director - default 0744
             'visibility' => 'private', // defaults to 'private'
-            'permPublic' => 0664 // file mod ..
+            'permPublic' => 0664, // file mod ..
 
             // 'cache' => [
             //     'store' => 'memcached',
@@ -95,16 +95,16 @@ return [
             'host' => '93.157.63.82',
             'username' => 'www',
             'password' => 'rjatortkdeks',
-        
+
             // Settings for SSH key based authentication...
             // 'privateKey' => '/path/to/privateKey',
             // 'password' => 'encryption-password',
-        
+
             // Optional SFTP Settings...
             'port' => 19989,
             'root' => '/data/www/backup/yagong/',
             'timeout' => 30,
-            'directoryPerm'=> 0775, // director - default 0744  755 
+            'directoryPerm'=> 0775, // director - default 0744  755
             'visibility' => 'private', // defaults to 'private'
             // 'permPublic' => 0554 // file mod ..
             'permPublic'=>664,

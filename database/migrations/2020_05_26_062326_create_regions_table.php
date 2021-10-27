@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateRegionsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateRegionsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('regions')) {
+        if (! Schema::hasTable('regions')) {
             Schema::create('regions', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->bigInteger('parent_id')->nullable();
@@ -23,8 +23,6 @@ class CreateRegionsTable extends Migration
                 $table->timestamps();
             });
         }
-
-        
     }
 
     /**

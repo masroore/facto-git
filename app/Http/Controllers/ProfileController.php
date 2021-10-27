@@ -25,8 +25,9 @@ class ProfileController extends Controller
         // $current_password = 'dkqpsXkehfm159!?';
 
         if (! Hash::check($current_password, $request->user()->password)) {
-            $msg ='기존 비밀번호가 올바르지 않습니다.';
-            return redirect()->back()->with('error', $msg );
+            $msg = '기존 비밀번호가 올바르지 않습니다.';
+
+            return redirect()->back()->with('error', $msg);
         }
 
         $this->validate($request, [
@@ -39,7 +40,8 @@ class ProfileController extends Controller
             'password1' => $request->password,
         ])->save();
 
-        $msg ='변경되었습니다.';
-        return redirect()->back()->with('success', $msg );
+        $msg = '변경되었습니다.';
+
+        return redirect()->back()->with('success', $msg);
     }
 }

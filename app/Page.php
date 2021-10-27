@@ -19,10 +19,10 @@ class Page extends Model
     protected $table = 'pages';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**

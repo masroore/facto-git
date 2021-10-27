@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
 {
-    
     public static $wrap = 'post';
     public $preserveKeys = true;
 
@@ -36,5 +35,4 @@ class PostResource extends JsonResource
     {
         return ['status' => 'success'];
     }
-
 }

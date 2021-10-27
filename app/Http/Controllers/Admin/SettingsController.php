@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests;
 use App\Setting;
 use Illuminate\Http\Request;
 
@@ -20,7 +19,7 @@ class SettingsController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $settings = Setting::where('key', 'LIKE', "%$keyword%")
                 ->orWhere('value', 'LIKE', "%$keyword%")
                 ->orderBy('key')->paginate($perPage);
@@ -54,7 +53,7 @@ class SettingsController extends Controller
             $request,
             [
                 'key' => 'required|string|unique:settings',
-                'value' => 'required'
+                'value' => 'required',
             ]
         );
 
@@ -106,8 +105,8 @@ class SettingsController extends Controller
         $this->validate(
             $request,
             [
-                'key' => 'required|string|unique:settings,key,' . $id,
-                'value' => 'required'
+                'key' => 'required|string|unique:settings,key,'.$id,
+                'value' => 'required',
             ]
         );
         $requestData = $request->all();

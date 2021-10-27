@@ -19,7 +19,7 @@ class CreateCatsTable extends Migration
             $table->string('title');
             $table->string('type')->default('gallery');
             $table->string('status')->default('Active');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });

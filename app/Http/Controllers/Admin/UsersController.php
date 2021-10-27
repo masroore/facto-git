@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -20,7 +20,7 @@ class UsersController extends Controller
         $keyword = $request->get('search');
         $perPage = 15;
 
-        if (!empty($keyword)) {
+        if (! empty($keyword)) {
             $users = User::where('name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
@@ -62,16 +62,15 @@ class UsersController extends Controller
                 'nick' => 'required|unique:users,nick',
                 'email' => 'required|string|max:255|email|unique:users',
                 'password' => 'required',
-                'role_id' => 'required|integer'
+                'role_id' => 'required|integer',
             ]
         );
 
         $data = $request->except('password');
-        $data['password'] = Hash::make( $request->password)  ;
-        $data['password1'] = $request->password  ;
-        $data['role_id'] = $request->role_id  ;
+        $data['password'] = Hash::make($request->password);
+        $data['password1'] = $request->password;
+        $data['role_id'] = $request->role_id;
         $user = User::create($data);
-
 
         return redirect('admin/users')->with('flash_message', 'User added!');
     }
@@ -116,9 +115,6 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        
-
         $this->validate(
             $request,
             [
@@ -130,10 +126,10 @@ class UsersController extends Controller
             ]
         );
 
-        $data = $request->only( ['name', 'roles']);
+        $data = $request->only(['name', 'roles']);
         if ($request->has('password')) {
-            $data['password'] =Hash::make( $request->password)  ;
-            $data['password1'] = $request->password  ;
+            $data['password'] = Hash::make($request->password);
+            $data['password1'] = $request->password;
         }
 
         $user = User::findOrFail($id);
@@ -144,13 +140,13 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->role_id = $request->role_id;
 
-        if ($request->password ) {
-            $user->password = Hash::make( $request->password)  ;
-            $user->password1 = $request->password  ;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+            $user->password1 = $request->password;
         }
 
         $user->save();
-        
+
         return redirect('admin/users')->with('flash_message', 'User updated!');
     }
 

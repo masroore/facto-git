@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Premium extends Model
 {
-    protected $table ='premia';
+    protected $table = 'premia';
 
-    function upso_type(){
-        return $this->belongsTo( UpsoType::class);
+    public function upso_type()
+    {
+        return $this->belongsTo(UpsoType::class);
     }
 
-    function upso(){
-        return $this->belongsTo( Upso::class);
+    public function upso()
+    {
+        return $this->belongsTo(Upso::class);
     }
-
 }

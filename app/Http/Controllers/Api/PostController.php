@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
 use App\Models\Cat;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\PostResource;
-use App\Http\Resources\PostCollection;
 
 class PostController extends Controller
 {
@@ -16,28 +16,27 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( Request $request )
+    public function index(Request $request)
     {
-        if( $request->key== 'max-family') {
-
-            $hours =$request->hours ?? 1 ;
-            $cat_id = $request->cat_id ?? 1 ;
+        if ($request->key == 'max-family') {
+            $hours = $request->hours ?? 1;
+            $cat_id = $request->cat_id ?? 1;
             $posts = Post::query()
                         ->where('cat_id', $cat_id)
-                        ->whereBetween( 'created_at', [
+                        ->whereBetween('created_at', [
                             now()->subhours($hours)->toDateTimeString(),
                             now()->toDatetimeString(),
-                        ] )
+                        ])
                         ->orderBy('created_at', 'asc')
                         ->get();
-    
+
             // return new PostCollection($posts->keyBy->id);
             // return response()->json();
             return PostResource::collection($posts->keyBy->id)
-                                    ->additional( [
-                                        'cat'=>Cat::find( $cat_id),
+                                    ->additional([
+                                        'cat'=>Cat::find($cat_id),
                                     ]);
-        } else{
+        } else {
             return response()->json([]);
         }
     }

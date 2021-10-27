@@ -27,11 +27,10 @@ class CreatePostsTable extends Migration
             $table->string('outlink2')->default('');
             $table->string('thumb')->default('');
             $table->integer('visits')->default(1);
-            
+
             $table->timestamps();
 
             $table->index(['cat_id', 'option']);
-
         });
     }
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class TagsController extends Controller
 {
@@ -25,7 +25,6 @@ class TagsController extends Controller
         //             ->paginate($perPage);
         // }
 
-
         // return view('admin.posts.index', compact('tags', 'cats', 'cat'));
     }
 
@@ -36,7 +35,6 @@ class TagsController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -48,19 +46,17 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $name = $request->name; 
+        $name = $request->name;
         $cat_id = $request->cat_id;
 
         $tag = Tag::firstOrCreate(
             [
                 'cat_id' => $cat_id,
-                'name' =>  $name 
+                'name' =>  $name,
             ]
         );
 
-
-        return redirect('/admin/posts?cat_id=' . $cat_id)->with('success', '태그가 입력되었습니다.');
+        return redirect('/admin/posts?cat_id='.$cat_id)->with('success', '태그가 입력되었습니다.');
 
         // return redirect('admin.tags')->with('flash_message', 'Post added!');
     }
@@ -74,7 +70,6 @@ class TagsController extends Controller
      */
     public function show($id)
     {
-
         $tag = Tag::findOrFail($id);
 
         return view('admin.posts.show', compact('tag'));
@@ -105,7 +100,7 @@ class TagsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cat_id = $request->cat_id; 
+        $cat_id = $request->cat_id;
         $cat = Cat::find($cat_id);
 
         $this->validate($request, ['name' => 'required']);
@@ -133,8 +128,8 @@ class TagsController extends Controller
      */
     public function destroy($id)
     {
-
         Tag::destroy($id);
+
         return redirect('admin.tags')->with('flash_message', 'Post deleted!');
     }
 }

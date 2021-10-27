@@ -32,13 +32,13 @@ class GoogleRecaptcha implements Rule
                 'form_params' => [
                     'secret' => env('GOOGLE_RECAPTCHA_SECRET', false),
                     'remoteip' => request()->getClientIp(),
-                    'response' => $value
-                ]
+                    'response' => $value,
+                ],
             ]
         );
-        $body = json_decode((string)$response->getBody());
+        $body = json_decode((string) $response->getBody());
+
         return $body->success;
-        
     }
 
     /**

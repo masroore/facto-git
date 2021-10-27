@@ -7,17 +7,16 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    function index( Request $request){
-
+    public function index(Request $request)
+    {
         dd('tested');
         // $user = User::all();
         // dd($user);
         /* return view('test', [
-            'upso_type_id' => $request->upso_type_id, 
-            'main_region_id' => $request->main_region_id, 
-            'region_id' => $request->region_id, 
+            'upso_type_id' => $request->upso_type_id,
+            'main_region_id' => $request->main_region_id,
+            'region_id' => $request->region_id,
         ]);
  */
-        
     }
 }

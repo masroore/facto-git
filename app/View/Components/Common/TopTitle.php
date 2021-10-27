@@ -6,12 +6,12 @@ use Illuminate\View\Component;
 
 class TopTitle extends Component
 {
-    
     public $menu;
     public $mode;
-    public function __construct( $menu, $mode)
+
+    public function __construct($menu, $mode)
     {
-        $this->menu  = $menu ;
+        $this->menu = $menu;
         $this->mode = $mode;
     }
 

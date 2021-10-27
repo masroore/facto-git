@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class UpsoController extends Controller
 {
-    function index(){
+    public function index()
+    {
         return view('admin.upsos.index');
     }
 }

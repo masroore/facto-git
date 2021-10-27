@@ -175,14 +175,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
         Nagy\LaravelRating\LaravelRatingServiceProvider::class,
 
         App\Providers\ViewServiceProvider::class,
-        Mckenziearts\Notify\LaravelNotifyServiceProvider::class
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
 
     ],
 
@@ -236,9 +235,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class,    
+        'HTML' => Collective\Html\HtmlFacade::class,
 
-        "LaravelRating" => \Nagy\LaravelRating\LaravelRatingFacade::class,
+        'LaravelRating' => \Nagy\LaravelRating\LaravelRatingFacade::class,
     ],
 
 ];

@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Upso;
+use App\Casts\AllowanceCast;
 use App\Models\AllImage;
 use App\Models\Allowance;
-use App\Casts\AllowanceCast;
+use App\Models\Upso;
 use Illuminate\Database\Eloquent\Model;
 
 class Manager extends Model
@@ -16,16 +16,16 @@ class Manager extends Model
 
     public function upso()
     {
-        return $this->belongsTo( Upso::class);
+        return $this->belongsTo(Upso::class);
     }
 
-    function all_images(){
-        return $this->morphMany( AllImage::class, 'all_imagable' );
-    }
-    
-    function allowances(){
-        return $this->belongsToMany( Allowance::class );
-
+    public function all_images()
+    {
+        return $this->morphMany(AllImage::class, 'all_imagable');
     }
 
+    public function allowances()
+    {
+        return $this->belongsToMany(Allowance::class);
+    }
 }

@@ -33,7 +33,7 @@ trait HasRoles
      *
      * @param  mixed $role
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRole($role)
     {
@@ -51,7 +51,7 @@ trait HasRoles
             return false;
         }
 
-        return !!$role->intersect($this->roles)->count();
+        return (bool) $role->intersect($this->roles)->count();
     }
 
     /**
@@ -59,7 +59,7 @@ trait HasRoles
      *
      * @param  Permission $permission
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermission(Permission $permission)
     {

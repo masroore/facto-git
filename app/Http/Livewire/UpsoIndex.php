@@ -10,7 +10,8 @@ class UpsoIndex extends Component
     {
         return view('livewire.upso-index');
     }
-    function mount(){
 
+    public function mount()
+    {
     }
 }

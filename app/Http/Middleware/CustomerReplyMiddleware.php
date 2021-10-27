@@ -16,22 +16,21 @@ class CustomerReplyMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if( Auth::check() ){
+        if (Auth::check()) {
             $user = Auth::user();
-            if( $user->isAdmin() ) {
-                return $next($request);        
+            if ($user->isAdmin()) {
+                return $next($request);
             }
         }
 
         $customer_id = $request->route('customer');
 
-        $key = 'customer-reply-'. $customer_id; 
-        $saved_session = $request->session()->get( $key );
-        if( $saved_session == 'success') {
+        $key = 'customer-reply-'.$customer_id;
+        $saved_session = $request->session()->get($key);
+        if ($saved_session == 'success') {
             return $next($request);
         }
-        return false;
 
-        
+        return false;
     }
 }

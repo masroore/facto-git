@@ -14,9 +14,8 @@ class CustController extends Controller
         $this->middleware('auth')->only(['destroy', 'update']);
     }
 
-
-
-    function inputPassword( Request $request){
+    public function inputPassword(Request $request)
+    {
         // $ccat_id  = $request->ccat_id ;
         // if( ! $ccat_id){
         //     $ccat_id = 9 ;
@@ -28,31 +27,29 @@ class CustController extends Controller
                     ->first();
 
         $ccat = $customer->ccat;
-        $page= $request->page ??  1 ;
+        $page = $request->page ?? 1;
 
         return view('inputPassword', [
             'ccat'=>$ccat,
             'customer'=>$customer,
-            'page'=>$page
+            'page'=>$page,
         ]);
-
     }
 
-    public function index( Request $request )
+    public function index(Request $request)
     {
-        $ccat_id  = $request->ccat_id ;
-        if( ! $ccat_id){
-            $ccat_id = 9 ;
+        $ccat_id = $request->ccat_id;
+        if (! $ccat_id) {
+            $ccat_id = 9;
         }
-        
-        $ccat = Ccat::find( $ccat_id );
+
+        $ccat = Ccat::find($ccat_id);
         $customers = Customer::where('ccat_id', $ccat_id)
                 ->with('comments')
                 ->orderBy('created_at', 'desc')
                 ->paginate(25);
         // dd( $customers->toArray());
         return view('custs.index', compact('ccat', 'customers'));
-
     }
 
     /**
@@ -60,12 +57,12 @@ class CustController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( Request $request )
+    public function create(Request $request)
     {
-        $ccat_id  = $request->ccat_id ;
-        $ccat = Ccat::find( $ccat_id );
+        $ccat_id = $request->ccat_id;
+        $ccat = Ccat::find($ccat_id);
+
         return view('custs.create', compact('ccat'));
-        
     }
 
     /**
@@ -77,17 +74,17 @@ class CustController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        if( Auth::check() && Auth::user()->isAdmin() ){
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $this->validate($request, [
                 'ccat_id' => 'required',
                 'title' => 'required|string|max:50|min:3',
                 'content' => 'required|string|min:10',
             ]);
-    
+
             $customer = Customer::firstOrCreate(
                 [
                     'ccat_id' =>  $request->ccat_id,
-                    'name' =>  Auth::user()->nick ,
+                    'name' =>  Auth::user()->nick,
                     'password' =>  $request->password,
                     'title' =>  $request->title,
                     'content' =>  $request->content,
@@ -102,11 +99,11 @@ class CustController extends Controller
                 'title' => 'required|string|max:50|min:3',
                 'content' => 'required|string|min:10',
             ]);
-    
+
             $customer = Customer::firstOrCreate(
                 [
                     'ccat_id' =>  $request->ccat_id,
-                    'name' =>  $request->name ,
+                    'name' =>  $request->name,
                     'password' =>  $request->password,
                     'title' =>  $request->title,
                     'content' =>  $request->content,
@@ -114,9 +111,8 @@ class CustController extends Controller
                 ]
             );
         }
-        
-        return redirect('/customers?ccat_id=' . $request->ccat_id )->with('flash_message', '글이 추가 되었습니다. ');
 
+        return redirect('/customers?ccat_id='.$request->ccat_id)->with('flash_message', '글이 추가 되었습니다. ');
     }
 
     /**
@@ -127,24 +123,20 @@ class CustController extends Controller
      */
     public function show(Customer $customer, Request $request)
     {
-        if( auth()->check() && auth()->user()->isAdmin()){
-
+        if (auth()->check() && auth()->user()->isAdmin()) {
         } else {
-            $key = 'cust-pass-' .$customer->id ;
-            if(  session()->get( $key ) != 'ok' ) {
+            $key = 'cust-pass-'.$customer->id;
+            if (session()->get($key) != 'ok') {
                 return redirect()->route('inputPassword', [
                     'customer_id'=>$customer->id,
                     'page'=>$request->page,
                 ]);
             }
         }
-        
-        
-        
-        $page= $request->page;
 
-        return view('custs.show', compact( 'customer', 'page'));
+        $page = $request->page;
 
+        return view('custs.show', compact('customer', 'page'));
     }
 
     /**
@@ -178,11 +170,9 @@ class CustController extends Controller
      */
     public function destroy(Customer $customer)
     {
-
-        $ccat_id = $customer->ccat->id ; 
+        $ccat_id = $customer->ccat->id;
         Customer::destroy($customer->id);
-        return redirect('/customers?ccat_id=' . $ccat_id )->with('flash_message', '삭제되었습니다.');
 
+        return redirect('/customers?ccat_id='.$ccat_id)->with('flash_message', '삭제되었습니다.');
     }
-
 }

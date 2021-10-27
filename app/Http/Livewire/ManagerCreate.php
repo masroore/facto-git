@@ -232,7 +232,7 @@ class ManagerCreate extends Component
     protected function insertPhotos($manager, $photos)
     {
         $all_images = AllImage::where('all_imagable_id', $manager->id)
-                        ->where('all_imagable_type', 'App\Models\Manager')
+                        ->where('all_imagable_type', \App\Models\Manager::class)
                         ->get();
         $all_images->each->delete();
         // $manager->all_images()->each->detach();

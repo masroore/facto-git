@@ -12,14 +12,10 @@ Route::get('/', 'MainController@index');
 
 Route::get('/test2/{post}', 'PostController@list_test');
 
-Route::group([
-    'middleware' => ['recaptcha'],
-], function () {
+Route::middleware('recaptcha')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::group([
-        'middleware' => ['auth'],
-    ], function () {
+    Route::middleware('auth')->group(function () {
         Route::get('/profile', 'ProfileController@index');
         Route::post('/profile', 'ProfileController@update');
     });
@@ -62,12 +58,7 @@ Route::get('/logout', 'Auth\\LoginController@logout');
 Route::get('/clear-cache', 'UtilsController@cacheClear');
 
 /// Admin Start
-Route::group([
-    'prefix' => 'admin',
-    'middleware' => ['auth', 'isAdmin'],
-    'namespace' => 'Admin',
-    'as'=>'admin.',
-], function () {
+Route::prefix('admin')->middleware('auth', 'isAdmin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'AdminController@index');
     Route::resource('/roles', 'RolesController');
     Route::resource('/permissions', 'PermissionsController');

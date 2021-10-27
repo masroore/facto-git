@@ -15,19 +15,13 @@ Route::get('/logout', 'Auth\\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group([
-    'middleware' => ['auth'],
-], function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', 'ProfileController@index');
     Route::post('/profile', 'ProfileController@update');
 });
 
 /// Admin Start
-Route::group([
-    'prefix' => 'admin',
-    'middleware' => ['auth', 'isAdmin'],
-    'namespace' => 'Admin',
-], function () {
+Route::prefix('admin')->middleware('auth', 'isAdmin')->namespace('Admin')->group(function () {
     Route::get('/', 'AdminController@index');
     Route::resource('/roles', 'RolesController');
     Route::resource('/permissions', 'PermissionsController');
@@ -50,7 +44,7 @@ Route::group([
     Route::GET('/tools/status', 'ToolsController@status');
 });
 
-Route::group(['prefix' => 'admin',  'middleware' => []], function () {
+Route::prefix('admin')->middleware()->group(function () {
     // Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     // Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 });

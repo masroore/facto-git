@@ -1,0 +1,41 @@
+<?php
+
+namespace App\View\Components;
+
+use App\Models\Banner;
+use Illuminate\View\Component;
+use Illuminate\Support\Facades\Cache;
+
+class UpsoPremium extends Component
+{
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\View\View|string
+     */
+    public function render()
+    {
+        $seconds = 60 * 60 * 24;
+        $cache_key = 'banners-5'  ;
+
+        $premia = Cache::remember( $cache_key,  $seconds, function () {
+            return Banner::where('division', 5)
+                    ->where('status', 'A')
+                    ->get();
+        });
+
+
+        return view('components.upso-premium')
+                ->with('premia', $premia);
+    }
+}
